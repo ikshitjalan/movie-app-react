@@ -1,13 +1,26 @@
 import React from 'react';
+
+import { data } from '../data';
 import Navbar from './Navbar';
 import MovieCard from './MovieCard';
 
 class App extends React.Component {
-  componentDidMount() {
 
+  componentDidMount() {
+    const { store } = this.props;
+
+    store.subscribe(() => {
+      this.forceUpdate();
+    })
+
+    store.dispatch({
+      type: 'ADD_MOVIES',
+      movies: data
+    })
   }
+
   render() {
-    const  movies  = this.props.store.getState();
+    const movies = this.props.store.getState();
 
     return (
       <div className="App">
